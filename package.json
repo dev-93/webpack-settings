@@ -1,0 +1,19 @@
+{
+  "name": "webpack-settings",
+  "version": "1.0.0",
+  "description": "\"[프론트엔드 개발 환경의 이해와 실습](https://www.inflearn.com/course/프론트엔드-개발환경)\" 강의 자료.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dev-93/webpack-settings.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dev-93/webpack-settings/issues"
+  },
+  "homepage": "https://github.com/dev-93/webpack-settings#readme"
+}
