@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/dev-93/webpack-settings/issues"
   },
-  "homepage": "https://github.com/dev-93/webpack-settings#readme"
+  "homepage": "https://github.com/dev-93/webpack-settings#readme",
+  "devDependencies": {
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1"
+  }
 }
