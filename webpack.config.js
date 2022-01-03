@@ -2,7 +2,8 @@ const path = require('path');
 const webpack = require('webpack');
 const childProcess = require('child_process');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require("clean-webpack-plugin")
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
     mode: 'development',
@@ -21,7 +22,12 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: ["style-loader", "css-loader"],
+                use: [
+                    process.env.NODE_ENV === "production"
+                    ? MiniCssExtractPlugin.loader 
+                    : "style-loader",
+                    "css-loader"
+                ],
             },
             {
                 test: /\.(png|jpe?g|gif|svg|webp)$/i,
@@ -57,6 +63,9 @@ module.exports = {
                 removeComments: true, // 주석 제거
             } : false,
         }),
-        new CleanWebpackPlugin()
+        new CleanWebpackPlugin(),
+        ...(process.env.NODE_ENV === "production"
+        ? [new MiniCssExtractPlugin({ filename: `[name].css` })]
+        : [])
     ],
 }
