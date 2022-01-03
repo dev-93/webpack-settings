@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const childProcess = require('child_process');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require("clean-webpack-plugin")
 
 module.exports = {
     mode: 'development',
@@ -55,6 +56,7 @@ module.exports = {
                 collapseWhitespace: true, // 빈칸 제거
                 removeComments: true, // 주석 제거
             } : false,
-        })
+        }),
+        new CleanWebpackPlugin()
     ],
 }
