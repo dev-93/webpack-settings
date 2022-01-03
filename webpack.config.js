@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const childProcess = require('child_process');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     mode: 'development',
@@ -25,7 +26,6 @@ module.exports = {
                 test: /\.(png|jpe?g|gif|svg|webp)$/i,
                 loader: "url-loader",
                 options: {
-                    publicPath: "./dist/",
                     name: "[name].[ext]?[hash]",
                     limit: 20000
                 },
@@ -45,6 +45,16 @@ module.exports = {
             PRODUCTION: JSON.stringify(false),
             MAX_COUNT: JSON.stringify(999),
             "api.domain": JSON.stringify("http://dev.api.domain.com"),
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/index.html',
+            templateParameters: {
+                env: process.env.NODE_ENV === 'development' && `(개발용)`
+            },
+            minify: process.env.NODE_ENV === 'production' ? {
+                collapseWhitespace: true, // 빈칸 제거
+                removeComments: true, // 주석 제거
+            } : false,
         })
     ],
 }
