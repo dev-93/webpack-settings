@@ -34,7 +34,12 @@ module.exports = {
           name: "[name].[ext]?[hash]",
           limit: 10000 // 10Kb
         }
-      }
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "babel-loader", // 바벨 로더를 추가한다
+      },
       /**
        * TODO: babel-loader를 구성해 보세요.
        */
