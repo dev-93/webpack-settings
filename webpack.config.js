@@ -1,6 +1,7 @@
 const path = require("path");
 const webpack = require('webpack');
 const banner = require("./banner.js")
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: "development",
@@ -28,7 +29,15 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.BannerPlugin(banner)
+    new webpack.BannerPlugin(banner),
+    new HtmlWebpackPlugin({
+      minify: process.env.NODE_ENV === 'production' ? {
+        collapseWhitespace: true, // 빈칸 제거
+        removeComments: true, // 주석 제거
+      } : false,
+      hash: true,
+    })
+    
   ]
   /**
    * TODO: 아래 플러그인을 추가해서 번들 결과를 만들어 보세요.

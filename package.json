@@ -6,10 +6,9 @@
   "devDependencies": {
     "css-loader": "^3.4.1",
     "file-loader": "^5.0.2",
+    "html-webpack-plugin": "^5.5.0",
     "style-loader": "^1.1.2",
-    "url-loader": "^3.0.0",
-    "webpack": "^4.41.5",
-    "webpack-cli": "^3.3.10"
+    "url-loader": "^3.0.0"
   },
   "scripts": {
     "build": "webpack --progress"
@@ -24,5 +23,9 @@
   "bugs": {
     "url": "https://github.com/jeonghwan-kim/lecture-frontend-dev-env/issues"
   },
-  "homepage": "https://github.com/jeonghwan-kim/lecture-frontend-dev-env#readme"
+  "homepage": "https://github.com/jeonghwan-kim/lecture-frontend-dev-env#readme",
+  "dependencies": {
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1"
+  }
 }
