@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const banner = require("./banner.js")
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   mode: "development",
@@ -17,7 +18,12 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"]
+        use: [
+          process.env.NODE_ENV === "production"
+            ? MiniCssExtractPlugin.loader // 프로덕션 환경
+            : "style-loader", // 개발 환경
+          "css-loader",
+        ]
       },
       {
         test: /\.(png|jpg|svg|gif)$/,
@@ -39,6 +45,9 @@ module.exports = {
       hash: true,
     }),
     new CleanWebpackPlugin(),
+    ...(process.env.NODE_ENV === "production"
+      ? [new MiniCssExtractPlugin({ filename: `[name].css` })]
+      : []),
   ]
   /**
    * TODO: 아래 플러그인을 추가해서 번들 결과를 만들어 보세요.
