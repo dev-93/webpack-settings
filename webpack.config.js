@@ -24,6 +24,23 @@ module.exports = {
         },
         port: 8080,
         historyApiFallback: true,
+        onBeforeSetupMiddleware: function (devServer) {
+            if (!devServer) {
+              throw new Error('webpack-dev-server is not defined');
+            }
+      
+            devServer.app.get('/api/users', function (req, res) {
+                res.json([
+                    {
+                        id: 1,
+                        name: 'taenam'                
+                    }, {
+                        id: 2,
+                        name: 'jihun'
+                    }
+                ]);
+            });
+        },
     },
     stats: 'errors-only',
     module: {
