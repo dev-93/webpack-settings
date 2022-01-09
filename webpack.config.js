@@ -14,9 +14,13 @@ module.exports = {
     path: path.resolve("./dist")
   },
   devServer: {
-    overlay: true,
-    stats: "errors-only"
-    // TODO: 여기에 api 서버 프록싱 설정을 추가하세요
+    client: {
+      overlay: true,
+      logging: "error",
+    },
+    // onBeforeSetupMiddleware: (devServer) => {
+    //   devServer.app.use(apiMocker("/api", "mocks/api"));
+    // },
   },
   module: {
     rules: [
