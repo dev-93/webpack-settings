@@ -18,6 +18,9 @@ module.exports = {
       overlay: true,
       logging: "error",
     },
+    proxy: {
+      '/api': 'http://localhost:8081' // 프록시
+    }
     // onBeforeSetupMiddleware: (devServer) => {
     //   devServer.app.use(apiMocker("/api", "mocks/api"));
     // },
