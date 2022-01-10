@@ -5,15 +5,19 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const apiMocker = require("connect-api-mocker");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+
+const mode = process.env.NODE_ENV || "development";
 
 module.exports = {
-    mode: 'development',
+    mode,
     entry: {
         main: './src/app.js'
     },
     output: {
         path: path.resolve("./dist"),
-        filename: '[name].js'
+        filename: '[name].js',
+        publicPath: "/"
     },
     devServer: {
         client: {
@@ -59,6 +63,13 @@ module.exports = {
                 exclude: /node_modules/
             },
         ]
+    },
+    optimization: {
+        minimizer: [
+          // For webpack@5 you can use the `...` syntax to extend existing minimizers (i.e. `terser-webpack-plugin`), uncomment the next line
+          // `...`,
+          new CssMinimizerPlugin(),
+        ],
     },
     plugins: [
         new webpack.BannerPlugin({
