@@ -112,11 +112,13 @@ module.exports = {
         ...(process.env.NODE_ENV === "production"
         ? [new MiniCssExtractPlugin({ filename: `[name].css` })]
         : []),
-        new CopyPlugin([
+        new CopyPlugin({
+          patterns: [
             {
-                from: "./node_modules/axios/dist/axios.min.js",
-                to: "./axios.min.js", // 목적지 파일에 들어간다
+              from: "./node_modules/axios/dist/axios.min.js",
+              to: "./axios.min.js", // 목적지 파일에 들어간다
             },
-        ])
+          ]
+        }),
     ],
 }
