@@ -32,6 +32,7 @@ module.exports = {
       
             devServer.app.use(apiMocker('/api', 'mocks/api'));
         },
+        hot: true
     },
     stats: 'errors-only',
     module: {
