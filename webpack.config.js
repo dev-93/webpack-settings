@@ -7,6 +7,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const apiMocker = require("connect-api-mocker");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 const mode = process.env.NODE_ENV || "development";
 
@@ -76,9 +77,12 @@ module.exports = {
                 },
             }),
         ] : [],
-        splitChunks: {
-            chunks: "all",
-        },
+        // splitChunks: {
+        //     chunks: "all",
+        // },
+    },
+    externals: {
+        axios: "axios",
     },
     plugins: [
         new webpack.BannerPlugin({
@@ -107,6 +111,12 @@ module.exports = {
         new CleanWebpackPlugin(),
         ...(process.env.NODE_ENV === "production"
         ? [new MiniCssExtractPlugin({ filename: `[name].css` })]
-        : [])
+        : []),
+        new CopyPlugin([
+            {
+                from: "./node_modules/axios/dist/axios.min.js",
+                to: "./axios.min.js", // 목적지 파일에 들어간다
+            },
+        ])
     ],
 }
