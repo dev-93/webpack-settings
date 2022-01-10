@@ -13,7 +13,7 @@ const mode = process.env.NODE_ENV || "development";
 module.exports = {
     mode,
     entry: {
-        main: './src/app.js'
+        main: './src/app.js',
     },
     output: {
         path: path.resolve("./dist"),
@@ -76,6 +76,9 @@ module.exports = {
                 },
             }),
         ] : [],
+        splitChunks: {
+            chunks: "all",
+        },
     },
     plugins: [
         new webpack.BannerPlugin({
