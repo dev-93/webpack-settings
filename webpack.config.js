@@ -4,6 +4,7 @@ const childProcess = require('child_process');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const apiMocker = require("connect-api-mocker");
 
 module.exports = {
     mode: 'development',
@@ -14,12 +15,27 @@ module.exports = {
         path: path.resolve("./dist"),
         filename: '[name].js'
     },
+    devServer: {
+        client: {
+            overlay: true,
+        },
+        static: {
+            directory: path.join(__dirname, 'dist'),
+            publicPath: "/",
+        },
+        port: 8080,
+        historyApiFallback: true,
+        onBeforeSetupMiddleware: function (devServer) {
+            if (!devServer) {
+              throw new Error('webpack-dev-server is not defined');
+            }
+      
+            devServer.app.use(apiMocker('/api', 'mocks/api'));
+        },
+    },
+    stats: 'errors-only',
     module: {
         rules: [
-            {
-                test: /\.js$/,
-                use: path.resolve('./my-webpack-loader.js')
-            },
             {
                 test: /\.css$/,
                 use: [
@@ -36,6 +52,11 @@ module.exports = {
                     name: "[name].[ext]?[hash]",
                     limit: 20000
                 },
+            },
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/
             },
         ]
     },
