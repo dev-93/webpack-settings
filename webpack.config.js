@@ -5,15 +5,21 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const apiMocker = require("connect-api-mocker");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
+
+const mode = process.env.NODE_ENV || "development";
 
 module.exports = {
-    mode: 'development',
+    mode,
     entry: {
-        main: './src/app.js'
+        main: './src/app.js',
     },
     output: {
         path: path.resolve("./dist"),
-        filename: '[name].js'
+        filename: '[name].js',
+        publicPath: "/"
     },
     devServer: {
         client: {
@@ -61,6 +67,24 @@ module.exports = {
             },
         ]
     },
+    optimization: {
+        minimizer: mode === "production" ? [
+            new CssMinimizerPlugin(),
+            new TerserPlugin({
+                terserOptions: {
+                    compress: {
+                        drop_console: true, // 콘솔 로그를 제거한다
+                    },
+                },
+            }),
+        ] : [],
+        // splitChunks: {
+        //     chunks: "all",
+        // },
+    },
+    externals: {
+        axios: "axios",
+    },
     plugins: [
         new webpack.BannerPlugin({
             banner: `
@@ -88,6 +112,14 @@ module.exports = {
         new CleanWebpackPlugin(),
         ...(process.env.NODE_ENV === "production"
         ? [new MiniCssExtractPlugin({ filename: `[name].css` })]
-        : [])
+        : []),
+        new CopyPlugin({
+          patterns: [
+            {
+              from: "./node_modules/axios/dist/axios.min.js",
+              to: "./axios.min.js", // 목적지 파일에 들어간다
+            },
+          ]
+        }),
     ],
 }

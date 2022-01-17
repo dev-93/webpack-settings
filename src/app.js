@@ -6,13 +6,13 @@ let resultEl;
 let formEl;
 
 document.addEventListener("DOMContentLoaded", async () => {
-  formEl = document.createElement('div');
-  formEl.innerHTML = form.render();
-  document.body.appendChild(formEl);
+  const res = await axios.get('/api/users');
+  console.log(res.data);
+  console.log("hello");
   
-  resultEl = document.createElement('div');
-  resultEl.innerHTML = await result.render();
-  document.body.appendChild(resultEl);
+  document.body.innerHTML = res.data.map(user => {
+    return `<div>${user.id}: ${user.name}</div>`
+  }).join('');
 });
 
 if (module.hot) {
